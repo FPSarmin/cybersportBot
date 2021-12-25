@@ -37,6 +37,9 @@ async def subscribing_set(message: types.Message, state: FSMContext):
 
 
 def register_subscribtion(dp: Dispatcher):
-    dp.register_message_handler(subscribing_start, commands='subscribe', state='*')
-    dp.register_message_handler(subscribing_start, Text(equals='Подписаться/отписаться на/от новости(ей)'), state='*')
-    dp.register_message_handler(subscribing_set, state=SubscribingNews.waiting_for_choosing)
+    dp.register_message_handler(
+        subscribing_start, commands='subscribe', state='*')
+    dp.register_message_handler(subscribing_start, Text(
+        equals='Подписаться/отписаться на/от новости(ей)'), state='*')
+    dp.register_message_handler(
+        subscribing_set, state=SubscribingNews.waiting_for_choosing)

@@ -1,2 +1,2 @@
-with open("token.txt") as tok:
-    TOKEN = tok.read()
+import os
+TOKEN = os.environ.get('API_KEY')

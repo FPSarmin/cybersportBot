@@ -29,7 +29,8 @@ async def choosing_begin_time(message: types.Message, state: FSMContext):
         await message.answer('Пожалуйста, выберите время из списка')
         return
     await state.update_data(silent_begin=int(message.text.lstrip('0').rjust(1, '0')))
-    users.change_silent_begin(message.from_user.id, int(message.text.lstrip('0').rjust(1, '0')))
+    users.change_silent_begin(message.from_user.id, int(
+        message.text.lstrip('0').rjust(1, '0')))
     await message.answer('Время начала изменено, теперь введите время конца тихого режима', reply_markup=keyboard)
     await ChoosingSilent.next()
 
@@ -44,7 +45,8 @@ async def choosing_end_time(message: types.Message, state: FSMContext):
                              'Но лучше выберите другое время конца')
         return
     await state.update_data(silent_end=int(message.text.lstrip('0').rjust(1, '0')))
-    users.change_silent_end(message.from_user.id, int(message.text.lstrip('0').rjust(1, '0')))
+    users.change_silent_end(message.from_user.id, int(
+        message.text.lstrip('0').rjust(1, '0')))
     await message.answer('Время конца изменено, теперь в этот период вы будете получать сообщения в беззвучном режиме',
                          reply_markup=keyboard_base)
     await state.finish()
@@ -52,7 +54,11 @@ async def choosing_end_time(message: types.Message, state: FSMContext):
 
 
 def register_silent_mode(dp: Dispatcher):
-    dp.register_message_handler(choosing_time_start, commands='set_silent_mode', state='*')
-    dp.register_message_handler(choosing_time_start, Text(equals='Настроить тихий режим'), state='*')
-    dp.register_message_handler(choosing_begin_time, state=ChoosingSilent.waiting_for_time_begin)
-    dp.register_message_handler(choosing_end_time, state=ChoosingSilent.waiting_for_time_end)
+    dp.register_message_handler(
+        choosing_time_start, commands='set_silent_mode', state='*')
+    dp.register_message_handler(choosing_time_start, Text(
+        equals='Настроить тихий режим'), state='*')
+    dp.register_message_handler(
+        choosing_begin_time, state=ChoosingSilent.waiting_for_time_begin)
+    dp.register_message_handler(
+        choosing_end_time, state=ChoosingSilent.waiting_for_time_end)

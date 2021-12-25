@@ -44,8 +44,10 @@ async def say_everyone_get(message: types.Message, state: FSMContext):
 async def set_commands(b: Bot):
     commands = [
         BotCommand(command='/start', description='Начать знакомство'),
-        BotCommand(command='/subscribe', description='Подписаться/отписаться на/от новости(ей)'),
-        BotCommand(command='/set_silent_mode', description='Изменить время тихого режима')
+        BotCommand(command='/subscribe',
+                   description='Подписаться/отписаться на/от новости(ей)'),
+        BotCommand(command='/set_silent_mode',
+                   description='Изменить время тихого режима')
     ]
     await b.set_my_commands(commands)
 
@@ -67,15 +69,18 @@ async def scheduled(wait_for):
                         await bot.send_message(user_list.loc[ind, 'user_id'], '<b>' + new['news_title'] + '</b>'
                                                + '\n\n' +
                                                new['news_description'] + '\n<a href="' +
-                                               new['news_link'] + '">Читать далее...</a>' + '\n\n#' + new['news_type'],
+                                               new['news_link'] + '">Читать далее...</a>' +
+                                               '\n\n#' + new['news_type'],
                                                parse_mode="HTML",
                                                disable_web_page_preview=True,
                                                disable_notification=users.is_in_time(user_list.loc[ind, 'user_id']))
                     except BotBlocked:
                         users.remove_user(user_list.loc[ind, 'user_id'])
-                        print(f"Меня заблокировал пользователь! Удаляю его из базы данных\nОшибка: {BotBlocked}")
+                        print(
+                            f"Меня заблокировал пользователь! Удаляю его из базы данных\nОшибка: {BotBlocked}")
             except KeyError:
-                suggestions.add_suggestion(506424401, 'Добавьте игру ' + new['news_type'])
+                suggestions.add_suggestion(
+                    506424401, 'Добавьте игру ' + new['news_type'])
             news.change_news_status(new['news_link'])
 
 
@@ -90,7 +95,8 @@ async def main():
     register_subscribtion(dp)
     register_silent_mode(dp)
     dp.register_message_handler(say_everyone, commands='sayall', state='*')
-    dp.register_message_handler(say_everyone_get, state=SayAllStatus.waiting_for_message)
+    dp.register_message_handler(
+        say_everyone_get, state=SayAllStatus.waiting_for_message)
 
     await set_commands(bot)
 

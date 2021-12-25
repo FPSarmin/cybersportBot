@@ -49,7 +49,11 @@ async def suggestion_get(message: types.Message, state: FSMContext):
 def register_common(dp: Dispatcher):
     dp.register_message_handler(start, commands='start', state='*')
     dp.register_message_handler(cancel, commands='cancel', state='*')
-    dp.register_message_handler(cancel, Text(equals='назад', ignore_case=True), state='*')
-    dp.register_message_handler(cancel, Text(equals='отмена', ignore_case=True), state='*')
-    dp.register_message_handler(suggestion_add, Text(equals='Добавить предложение или отзыв'), state='*')
-    dp.register_message_handler(suggestion_get, state=SuggestionStatus.waiting_for_suggestion)
+    dp.register_message_handler(cancel, Text(
+        equals='назад', ignore_case=True), state='*')
+    dp.register_message_handler(cancel, Text(
+        equals='отмена', ignore_case=True), state='*')
+    dp.register_message_handler(suggestion_add, Text(
+        equals='Добавить предложение или отзыв'), state='*')
+    dp.register_message_handler(
+        suggestion_get, state=SuggestionStatus.waiting_for_suggestion)

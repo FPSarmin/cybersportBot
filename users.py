@@ -83,17 +83,21 @@ class Users:
 
     def is_in_time(self, user_id: int):
         now = datetime.datetime.now()
-        silent_begin = now.replace(hour=int(self.df.loc[self.df.user_id == user_id, 'silent_begin'].item()))
-        silent_end = now.replace(hour=int(self.df.loc[self.df.user_id == user_id, 'silent_end'].item()))
+        silent_begin = now.replace(
+            hour=int(self.df.loc[self.df.user_id == user_id, 'silent_begin'].item()))
+        silent_end = now.replace(
+            hour=int(self.df.loc[self.df.user_id == user_id, 'silent_end'].item()))
         print(silent_end > now > silent_begin)
         return silent_end > now > silent_begin
 
     def change_silent_begin(self, user_id: int, hour: int):
-        self.df.loc[self.df[self.df.user_id == user_id].index, 'silent_begin'] = hour
+        self.df.loc[self.df[self.df.user_id ==
+                            user_id].index, 'silent_begin'] = hour
         self.df.to_csv("users_db.csv", encoding='utf-8', index=False)
 
     def change_silent_end(self, user_id: int, hour: int):
-        self.df.loc[self.df[self.df.user_id == user_id].index, 'silent_end'] = hour
+        self.df.loc[self.df[self.df.user_id ==
+                            user_id].index, 'silent_end'] = hour
         self.df.to_csv("users_db.csv", encoding='utf-8', index=False)
 
 

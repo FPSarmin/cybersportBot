@@ -43,7 +43,8 @@ class News:
                 if self.df.empty or len(self.df[self.df.news_link == link]) == 0 and \
                         link.find('https://t.me/csru_official') == -1:
                     new = True
-                    little_soup = BeautifulSoup(requests.get(link).content, 'html.parser')
+                    little_soup = BeautifulSoup(
+                        requests.get(link).content, 'html.parser')
                     try:
                         short_descriptions = little_soup('div', 'typography js-mediator-article')[0]\
                             .p.text.replace('\xa0', ' ')
